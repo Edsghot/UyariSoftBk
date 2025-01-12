@@ -1,6 +1,7 @@
-﻿using UyariSoftBk.Model.Dtos.Attedance;
-using UyariSoftBk.Model.Dtos.Event;
+﻿
 using Mapster;
+using Microsoft.EntityFrameworkCore;
+using UyariSoftBk.Model.Dtos.Product;
 using UyariSoftBk.Modules.Event.Domain.IRepository;
 using UyariSoftBk.Modules.Product.Application.Port;
 using UyariSoftBk.Modules.Product.Domain.Entity;
@@ -17,6 +18,14 @@ public class ProductAdapter : IProductInputPort
         _productRepository = repository;
         _productOutPort = productOutPort;
     }
-    
+    public async Task GetAllProducts()
+    {
+        var products = await _productRepository.GetAllAsync<ProductEntity>(
+            include: query => query
+                .Include(p => p.ProductImages)
+                .Include(p => p.Category)
+        );
+        _productOutPort.GetAllProducts(products.Adapt<IEnumerable<ProductDto>>());
+    }
     
 }

@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UyariSoftBk.Configuration.Context.EntityConfigurations;
 using UyariSoftBk.Modules.Product.Domain.Entity;
-using UyariSoftBk.Modules.Event.Domain.Entity;
-using UyariSoftBk.Modules.Student.Domain.Entity;
-using UyariSoftBk.Modules.Teacher.Domain.Entity;
 
 namespace UyariSoftBk.Configuration.Context;
 
@@ -13,7 +10,12 @@ public class MySqlContext : DbContext
     {
     }
     
-    public DbSet<ProductEntity> Attendances { get; set; }
+    public DbSet<ProductEntity> Products { get; set; }
+    public DbSet<CategoryEntity> Categories { get; set; }
+    public DbSet<OrderDetailEntity> OrderDetails { get; set; }
+    public DbSet<OrderEntity> Orders { get; set; }
+    public DbSet<ProductImageEntity> ProductImages { get; set; }
+    public DbSet<UserEntity> Users  {get;set;}
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +31,11 @@ public class MySqlContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new AttendanceEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new CategoryEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderDetailEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductImageEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
     }
 }

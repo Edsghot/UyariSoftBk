@@ -2,7 +2,6 @@ using UyariSoftBk.Configuration.Context;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using UyariSoftBk.Mapping;
-using UyariSoftBk.Model.Dtos.Teacher;
 using UyariSoftBk.Modules.Product.Application.Adapter;
 using UyariSoftBk.Modules.Product.Application.Port;
 using UyariSoftBk.Modules.Product.Infraestructure.Presenter;
@@ -27,7 +26,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductOutPort, ProductPresenter>();
 
 
-builder.Services.AddScoped<IValidator<TeacherDto>, TeacherDtoValidator>();
+//builder.Services.AddScoped<IValidator<TeacherDto>, TeacherDtoValidator>();
 
 
 

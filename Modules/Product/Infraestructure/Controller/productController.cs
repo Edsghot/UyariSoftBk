@@ -1,5 +1,4 @@
-﻿using UyariSoftBk.Model.Dtos.Attedance;
-using UyariSoftBk.Model.Dtos.Event;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using UyariSoftBk.Modules.Product.Application.Port;
 
@@ -18,7 +17,15 @@ public class productController : ControllerBase
         _productOutPort = productOutPort;
     }
 
-    
+    // GET: api/Product
+    [HttpGet("GetAllProduct")]
+    public async Task<ActionResult> GetAll()
+    {
+        await _productInputPort.GetAllProducts();
+
+        var products = _productOutPort.GetResponse;
+        return Ok(products);
+    }
 
     // PUT api/<ResearchController>/5
     [HttpPut("{id}")]
