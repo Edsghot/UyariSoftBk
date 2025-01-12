@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "AttendanceEpiisBk": {
+    "UyariSoftBk": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

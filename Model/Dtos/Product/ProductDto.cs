@@ -9,5 +9,5 @@ public record ProductDto
     public int Stock { get; set; }
     public int CategoryId { get; set; }
     public CategoryDto Category { get; set; }
-    public ICollection<ProductImageDto> ProductImages { get; set; }
+    public List<ProductImageDto> ProductImages { get; set; }
 }

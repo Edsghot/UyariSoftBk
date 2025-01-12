@@ -25,7 +25,8 @@ public class ProductEntityConfiguration : IEntityTypeConfiguration<ProductEntity
 
         builder.HasOne(p => p.Category)
             .WithMany(c => c.Products)
-            .HasForeignKey(p => p.CategoryId);
+            .HasForeignKey(p => p.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(p => p.ProductImages)
             .WithOne(pi => pi.Product)
