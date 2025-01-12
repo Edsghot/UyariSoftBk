@@ -8,7 +8,5 @@ namespace UyariSoftBk.Modules.Product.Application.Port;
 
 public interface IProductOutPort : IBasePresenter<object>
 {
-    void GetAllAsync(IEnumerable<AttendanceDto> data);
-    void GetById(AttendanceDto teacher);
-    void TakeAttendance(ParticipantDataDto data);
+
 }

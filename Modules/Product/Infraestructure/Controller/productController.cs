@@ -18,48 +18,7 @@ public class productController : ControllerBase
         _productOutPort = productOutPort;
     }
 
-    [HttpGet("GetAll")]
-    public async Task<IActionResult> GetAll()
-    {
-        await _productInputPort.GetAllAsync();
-        var response = _productOutPort.GetResponse;
-
-        return Ok(response);
-    }
-
-    [HttpGet("GetById/{id:int}")]
-    public async Task<IActionResult> GetById([FromRoute] int id)
-    {
-        await _productInputPort.GetById(id);
-        var response = _productOutPort.GetResponse;
-
-        return Ok(response);
-    }
-
-    // GET api/<ResearchController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return "value";
-    }
-
-    // POST api/<ResearchController>/AddParticipant
-    [HttpPost("AddParticipant")]
-    public async Task<IActionResult> AddParticipant([FromBody] InsertParticipantDto participantDto)
-    {
-       
-            await _productInputPort.AddParticipant(participantDto);
-            return Ok(_productOutPort.GetResponse); 
-    }
     
-    
-    [HttpPost("TakeAttendance")]
-    public async Task<IActionResult> TakeAttendance([FromBody] InsertAttendanceDto participantDto)
-    {
-       
-        await _productInputPort.TakeAttendance(participantDto);
-        return Ok(_productOutPort.GetResponse); 
-    }
 
     // PUT api/<ResearchController>/5
     [HttpPut("{id}")]
