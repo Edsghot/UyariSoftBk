@@ -44,4 +44,25 @@ public class ProductAdapter : IProductInputPort
         var categoryDtos = categories.Adapt<IEnumerable<CategoryDto>>().ToList();
         _productOutPort.GetAllCategories(categoryDtos);
     }
+    
+    public async Task GetAllByCategories(int idCategory)
+    {
+        var products = await _productRepository.GetAllAsync<ProductEntity>(x => x.Where(x => x.IdCategory == idCategory));
+
+        var productDtos = products.Adapt<IEnumerable<ProductDto>>().ToList();
+         
+        foreach (var productDto in productDtos)
+        {
+            var githubEntities = await _productRepository.GetAllAsync<GitHubEntity>(x => x.Where(g => g.ProductId == productDto.ProductId));
+            productDto.GitHub = githubEntities.Adapt<List<GitHubDto>>();
+
+            var imageEntities = await _productRepository.GetAllAsync<ProductImageEntity>(x => x.Where(i => i.ProductId == productDto.ProductId));
+            productDto.Images = imageEntities.Adapt<List<ProductImageDto>>();
+            var categorias = await _productRepository.GetAllAsync<CategoryEntity>(x => x.Where(i => i.IdProduct == productDto.ProductId));
+
+            productDto.Categories = categorias.Adapt<List<CategoryDto>>();
+        
+        }
+        _productOutPort.GetAllByCategories(productDtos);
+    }
 }

@@ -34,4 +34,13 @@ public class ProductController : ControllerBase
         var products = _productOutPort.GetResponse;
         return Ok(products);
     }
+    
+    [HttpGet("GetAllByCategories/{idCategory:int}")]
+    public async Task<ActionResult> GetAllByCategories([FromRoute] int idCategory){
+    
+        await _productInputPort.GetAllByCategories(idCategory);
+
+        var products = _productOutPort.GetResponse;
+        return Ok(products);
+    }
 }

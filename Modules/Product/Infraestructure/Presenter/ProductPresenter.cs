@@ -16,4 +16,9 @@ public class ProductPresenter : BasePresenter<object>, IProductOutPort
     {
         Success(data);
     }
+
+    public void GetAllByCategories(IEnumerable<ProductDto> data)
+    {
+        Success(data);
+    }
 }
