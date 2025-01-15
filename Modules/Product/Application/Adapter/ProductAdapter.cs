@@ -21,7 +21,21 @@ public class ProductAdapter : IProductInputPort
     public async Task GetAllProducts()
     {
         var products = await _productRepository.GetAllAsync<ProductEntity>();
-        _productOutPort.GetAllProducts(products.Adapt<IEnumerable<ProductDto>>());
+
+        var productDtos = products.Adapt<IEnumerable<ProductDto>>().ToList();
+
+        foreach (var productDto in productDtos)
+        {
+            var githubEntities = await _productRepository.GetAllAsync<GitHubEntity>(x => x.Where(g => g.ProductId == productDto.ProductId));
+            productDto.GitHub = githubEntities.Adapt<List<GitHubDto>>();
+
+            var imageEntities = await _productRepository.GetAllAsync<ProductImageEntity>(x => x.Where(i => i.ProductId == productDto.ProductId));
+            productDto.Images = imageEntities.Adapt<List<ProductImageDto>>();
+            
+            
+        }
+
+        _productOutPort.GetAllProducts(productDtos);
     }
     
 }
