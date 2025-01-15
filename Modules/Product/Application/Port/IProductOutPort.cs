@@ -6,4 +6,5 @@ namespace UyariSoftBk.Modules.Product.Application.Port;
 public interface IProductOutPort : IBasePresenter<object>
 {
     void GetAllProducts(IEnumerable<ProductDto> data);
+    void GetAllCategories(IEnumerable<CategoryDto> data);
 }

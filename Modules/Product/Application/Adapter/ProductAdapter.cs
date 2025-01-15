@@ -38,5 +38,10 @@ public class ProductAdapter : IProductInputPort
         }
         _productOutPort.GetAllProducts(productDtos);
     }
-    
+    public async Task GetAllCategories()
+    {
+        var categories = await _productRepository.GetAllAsync<CategoryEntity>();
+        var categoryDtos = categories.Adapt<IEnumerable<CategoryDto>>().ToList();
+        _productOutPort.GetAllCategories(categoryDtos);
+    }
 }

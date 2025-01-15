@@ -25,4 +25,13 @@ public class ProductController : ControllerBase
         var products = _productOutPort.GetResponse;
         return Ok(products);
     }
+    
+    [HttpGet("GetAllCategories")]
+    public async Task<ActionResult> GetAllCategories()
+    {
+        await _productInputPort.GetAllCategories();
+
+        var products = _productOutPort.GetResponse;
+        return Ok(products);
+    }
 }

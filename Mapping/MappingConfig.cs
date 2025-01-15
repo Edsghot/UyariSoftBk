@@ -15,6 +15,7 @@ public class MappingConfig
         TypeAdapterConfig<OrderDetailEntity, OrderDetailDto>.NewConfig();
         TypeAdapterConfig<ProductImageEntity, ProductImageDto>.NewConfig();
         TypeAdapterConfig<UserEntity, UserDto>.NewConfig();
+        TypeAdapterConfig<CategoryEntity, CategoryDto>.NewConfig();
 
     }
 }
