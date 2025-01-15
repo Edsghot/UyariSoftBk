@@ -20,11 +20,7 @@ public class ProductAdapter : IProductInputPort
     }
     public async Task GetAllProducts()
     {
-        var products = await _productRepository.GetAllAsync<ProductEntity>(
-            include: query => query
-                .Include(p => p.ProductImages)
-                .Include(p => p.Category)
-        );
+        var products = await _productRepository.GetAllAsync<ProductEntity>();
         _productOutPort.GetAllProducts(products.Adapt<IEnumerable<ProductDto>>());
     }
     

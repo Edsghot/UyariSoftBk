@@ -8,14 +8,13 @@ public class ProductImageEntityConfiguration : IEntityTypeConfiguration<ProductI
 {
     public void Configure(EntityTypeBuilder<ProductImageEntity> builder)
     {
-        builder.HasKey(pi => pi.ImageId);
+        builder.HasKey(pi => pi.ProductImageId);
 
         builder.Property(pi => pi.ImageUrl)
             .IsRequired()
-            .HasMaxLength(200);
+            .HasMaxLength(800);
 
-        builder.HasOne(pi => pi.Product)
-            .WithMany(p => p.ProductImages)
-            .HasForeignKey(pi => pi.ProductId);
+        builder.Property(pi => pi.ProductId)
+            .IsRequired();
     }
 }

@@ -23,13 +23,46 @@ public class ProductEntityConfiguration : IEntityTypeConfiguration<ProductEntity
         builder.Property(p => p.Stock)
             .IsRequired();
 
-        builder.HasOne(p => p.Category)
-            .WithMany(c => c.Products)
-            .HasForeignKey(p => p.CategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.Property(p => p.UploadDate)
+            .IsRequired();
 
-        builder.HasMany(p => p.ProductImages)
-            .WithOne(pi => pi.Product)
-            .HasForeignKey(pi => pi.ProductId);
+        builder.Property(p => p.ModificationDate)
+            .IsRequired();
+
+        builder.Property(p => p.Cover)
+            .HasMaxLength(200);
+
+        builder.Property(p => p.Icon)
+            .HasMaxLength(200);
+
+        builder.Property(p => p.IdImages)
+            .IsRequired();
+
+        builder.Property(p => p.IdGitHub)
+            .IsRequired();
+        builder.Property(p => p.Discount)
+            .HasColumnType("decimal(18,2)");
+
+        builder.Property(p => p.Rating)
+            .IsRequired();
+
+        builder.Property(p => p.NumberOfReviews)
+            .IsRequired();
+
+        builder.Property(p => p.InstallationIntructions)
+            .HasMaxLength(500);
+
+        builder.Property(p => p.Version)
+            .HasMaxLength(50);
+
+        builder.Property(p => p.Developer)
+            .HasMaxLength(100);
+
+        builder.Property(p => p.WebSite)
+            .HasMaxLength(200);
+
+        builder.HasMany(p => p.ProductCategories)
+            .WithOne(pc => pc.Product)
+            .HasForeignKey(pc => pc.ProductId);
     }
 }

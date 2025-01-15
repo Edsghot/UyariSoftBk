@@ -17,8 +17,8 @@ public class CategoryEntityConfiguration : IEntityTypeConfiguration<CategoryEnti
         builder.Property(c => c.Description)
             .HasMaxLength(500);
 
-        builder.HasMany(c => c.Products)
-            .WithOne(p => p.Category)
-            .HasForeignKey(p => p.CategoryId);
+        builder.HasMany(c => c.ProductCategories)
+            .WithOne(pc => pc.Category)
+            .HasForeignKey(pc => pc.CategoryId);
     }
 }

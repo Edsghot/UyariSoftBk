@@ -11,8 +11,8 @@ using UyariSoftBk.Configuration.Context;
 namespace UyariSoftBk.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20250112203238_Initial")]
-    partial class Initial
+    [Migration("20250115014513_Initial1")]
+    partial class Initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,6 +40,25 @@ namespace UyariSoftBk.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.GitHubEntity", b =>
+                {
+                    b.Property<int>("GitHubId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.HasKey("GitHubId");
+
+                    b.ToTable("GitHubEntity");
                 });
 
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.OrderDetailEntity", b =>
@@ -91,55 +110,114 @@ namespace UyariSoftBk.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductCategoryEntity", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("ProductCategoryEntity");
+                });
+
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("Cover")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
+                    b.Property<string>("Developer")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<int>("IdGitHub")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdImages")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InstallationIntructions")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<int>("NumberOfReviews")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("double");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId");
+                    b.Property<DateTime>("UploadDate")
+                        .HasColumnType("datetime(6)");
 
-                    b.HasIndex("CategoryId");
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("WebSite")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.HasKey("ProductId");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductImageEntity", b =>
                 {
-                    b.Property<int>("ImageId")
+                    b.Property<int>("ProductImageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasMaxLength(800)
+                        .HasColumnType("varchar(800)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("ImageId");
-
-                    b.HasIndex("ProductId");
+                    b.HasKey("ProductImageId");
 
                     b.ToTable("ProductImages");
                 });
@@ -202,31 +280,28 @@ namespace UyariSoftBk.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", b =>
+            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductCategoryEntity", b =>
                 {
                     b.HasOne("UyariSoftBk.Modules.Product.Domain.Entity.CategoryEntity", "Category")
-                        .WithMany("Products")
+                        .WithMany("ProductCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductImageEntity", b =>
-                {
                     b.HasOne("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", "Product")
-                        .WithMany("ProductImages")
+                        .WithMany("ProductCategories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.CategoryEntity", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.OrderEntity", b =>
@@ -236,7 +311,7 @@ namespace UyariSoftBk.Migrations
 
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", b =>
                 {
-                    b.Navigation("ProductImages");
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.UserEntity", b =>
