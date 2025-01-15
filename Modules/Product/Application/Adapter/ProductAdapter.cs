@@ -31,10 +31,11 @@ public class ProductAdapter : IProductInputPort
 
             var imageEntities = await _productRepository.GetAllAsync<ProductImageEntity>(x => x.Where(i => i.ProductId == productDto.ProductId));
             productDto.Images = imageEntities.Adapt<List<ProductImageDto>>();
-            
-            
-        }
+            var categorias = await _productRepository.GetAllAsync<CategoryEntity>(x => x.Where(i => i.IdProduct == productDto.ProductId));
 
+            productDto.Categories = categorias.Adapt<List<CategoryDto>>();
+        
+        }
         _productOutPort.GetAllProducts(productDtos);
     }
     

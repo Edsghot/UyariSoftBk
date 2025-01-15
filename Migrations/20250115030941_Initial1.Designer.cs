@@ -11,7 +11,7 @@ using UyariSoftBk.Configuration.Context;
 namespace UyariSoftBk.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20250115014513_Initial1")]
+    [Migration("20250115030941_Initial1")]
     partial class Initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace UyariSoftBk.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
+
+                    b.Property<int>("IdProduct")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -110,21 +113,6 @@ namespace UyariSoftBk.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductCategoryEntity", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ProductCategoryEntity");
-                });
-
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", b =>
                 {
                     b.Property<int>("ProductId")
@@ -153,6 +141,9 @@ namespace UyariSoftBk.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
+
+                    b.Property<int>("IdCategory")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdGitHub")
                         .HasColumnType("int");
@@ -280,38 +271,9 @@ namespace UyariSoftBk.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductCategoryEntity", b =>
-                {
-                    b.HasOne("UyariSoftBk.Modules.Product.Domain.Entity.CategoryEntity", "Category")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", "Product")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.CategoryEntity", b =>
-                {
-                    b.Navigation("ProductCategories");
-                });
-
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.OrderEntity", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", b =>
-                {
-                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.UserEntity", b =>

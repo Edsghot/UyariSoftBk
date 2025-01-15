@@ -61,8 +61,6 @@ public class ProductEntityConfiguration : IEntityTypeConfiguration<ProductEntity
         builder.Property(p => p.WebSite)
             .HasMaxLength(200);
 
-        builder.HasMany(p => p.ProductCategories)
-            .WithOne(pc => pc.Product)
-            .HasForeignKey(pc => pc.ProductId);
+        builder.Property(p => p.IdCategory);
     }
 }

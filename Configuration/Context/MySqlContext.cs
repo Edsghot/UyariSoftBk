@@ -36,7 +36,6 @@ public class MySqlContext : DbContext
         modelBuilder.ApplyConfiguration(new ProductEntityConfiguration());
         
         modelBuilder.ApplyConfiguration(new CategoryEntityConfiguration());
-        modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new ProductImageEntityConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
         modelBuilder.ApplyConfiguration(new GitHubEntityConfiguration());

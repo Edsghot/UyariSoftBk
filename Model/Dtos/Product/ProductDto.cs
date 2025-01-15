@@ -20,5 +20,5 @@ public record ProductDto
         public string Version { get; set; }
         public string Developer { get; set; }
         public string WebSite { get; set; }
-        public List<CategoryDto> ProductCategories { get; set; }
+        public List<CategoryDto> Categories { get; set; }
 }

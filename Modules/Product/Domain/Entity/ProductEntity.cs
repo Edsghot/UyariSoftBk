@@ -21,6 +21,6 @@
         public string Version { get; set; }
         public string Developer { get; set; }
         public string WebSite { get; set; }
-        public ICollection<ProductCategoryEntity> ProductCategories { get; set; }
+        public int IdCategory { get; set; }
     }
 }
