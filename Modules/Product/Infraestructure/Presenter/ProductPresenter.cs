@@ -21,4 +21,9 @@ public class ProductPresenter : BasePresenter<object>, IProductOutPort
     {
         Success(data);
     }
+
+    public void GetByIdProduct(ProductDto data)
+    {
+        Success(data);
+    }
 }

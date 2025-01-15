@@ -8,4 +8,5 @@ public interface IProductOutPort : IBasePresenter<object>
     void GetAllProducts(IEnumerable<ProductDto> data);
     void GetAllCategories(IEnumerable<CategoryDto> data);
     void GetAllByCategories(IEnumerable<ProductDto> data);
+    void GetByIdProduct(ProductDto data);
 }

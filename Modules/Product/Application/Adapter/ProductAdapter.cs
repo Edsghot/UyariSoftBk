@@ -65,4 +65,24 @@ public class ProductAdapter : IProductInputPort
         }
         _productOutPort.GetAllByCategories(productDtos);
     }
+
+    public async Task GetByIdProduct(int idProduct)
+    {
+        var products = await _productRepository.GetAsync<ProductEntity>(x => x.ProductId == idProduct);
+
+        var productDtos = products.Adapt<ProductDto>();
+         
+        
+            var githubEntities = await _productRepository.GetAllAsync<GitHubEntity>(x => x.Where(g => g.ProductId == productDtos.ProductId));
+            productDtos.GitHub = githubEntities.Adapt<List<GitHubDto>>();
+
+            var imageEntities = await _productRepository.GetAllAsync<ProductImageEntity>(x => x.Where(i => i.ProductId == productDtos.ProductId));
+            productDtos.Images = imageEntities.Adapt<List<ProductImageDto>>();
+            var categorias = await _productRepository.GetAllAsync<CategoryEntity>(x => x.Where(i => i.IdProduct == productDtos.ProductId));
+
+            productDtos.Categories = categorias.Adapt<List<CategoryDto>>();
+        
+        
+        _productOutPort.GetByIdProduct(productDtos);
+    }
 }
