@@ -7,6 +7,5 @@ public record UserEntity
     public string Email { get; set; }
     public string PasswordHash { get; set; }
     public DateTime CreatedAt { get; set; }
-    public ICollection<OrderEntity> Orders { get; set; }
 
 }

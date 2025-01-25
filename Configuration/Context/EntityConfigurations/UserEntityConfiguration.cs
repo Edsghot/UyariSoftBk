@@ -23,9 +23,5 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
 
         builder.Property(u => u.CreatedAt)
             .IsRequired();
-
-        builder.HasMany(u => u.Orders)
-            .WithOne(o => o.User)
-            .HasForeignKey(o => o.UserId);
     }
 }

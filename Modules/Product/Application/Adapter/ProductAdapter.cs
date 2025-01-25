@@ -1,6 +1,7 @@
 ﻿
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using UyariSoftBk.Model.Dtos.Order;
 using UyariSoftBk.Model.Dtos.Product;
 using UyariSoftBk.Modules.Event.Domain.IRepository;
 using UyariSoftBk.Modules.Product.Application.Port;
@@ -12,11 +13,16 @@ public class ProductAdapter : IProductInputPort
 {
     private readonly IProductOutPort _productOutPort;
     private readonly IProductRepository _productRepository;
+    private readonly DateTime _peruDateTime;
 
     public ProductAdapter(IProductRepository repository, IProductOutPort productOutPort)
     {
         _productRepository = repository;
         _productOutPort = productOutPort;
+        
+        var peruTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+        _peruDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, peruTimeZone);
+
     }
     public async Task GetAllProducts()
     {
@@ -84,5 +90,14 @@ public class ProductAdapter : IProductInputPort
         
         
         _productOutPort.GetByIdProduct(productDtos);
+    }
+    public async Task InsertOrder(InsertOrderDto data)
+    {
+        var orderData = data.Adapt<OrderEntity>();
+        orderData.OrderDate = _peruDateTime;
+
+        await _productRepository.AddAsync(orderData);
+        
+        _productOutPort.Success(orderData,"Creado con exito!");
     }
 }

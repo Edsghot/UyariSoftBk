@@ -12,16 +12,13 @@ public class OrderDetailEntityConfiguration : IEntityTypeConfiguration<OrderDeta
 
         builder.Property(od => od.Quantity)
             .IsRequired();
-
+        builder.Property(od => od.OrderId)
+            .IsRequired();
+        builder.Property(od => od.ProductId)
+            .IsRequired();
         builder.Property(od => od.Price)
             .HasColumnType("decimal(18,2)");
 
-        builder.HasOne(od => od.Order)
-            .WithMany(o => o.OrderDetails)
-            .HasForeignKey(od => od.OrderId);
-
-        builder.HasOne(od => od.Product)
-            .WithMany()
-            .HasForeignKey(od => od.ProductId);
+    
     }
 }

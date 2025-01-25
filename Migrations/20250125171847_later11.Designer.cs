@@ -11,8 +11,8 @@ using UyariSoftBk.Configuration.Context;
 namespace UyariSoftBk.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20250115030941_Initial1")]
-    partial class Initial1
+    [Migration("20250125171847_later11")]
+    partial class later11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,10 +84,6 @@ namespace UyariSoftBk.Migrations
 
                     b.HasKey("OrderDetailId");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
                     b.ToTable("OrderDetails");
                 });
 
@@ -107,8 +103,6 @@ namespace UyariSoftBk.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -239,46 +233,6 @@ namespace UyariSoftBk.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.OrderDetailEntity", b =>
-                {
-                    b.HasOne("UyariSoftBk.Modules.Product.Domain.Entity.OrderEntity", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UyariSoftBk.Modules.Product.Domain.Entity.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.OrderEntity", b =>
-                {
-                    b.HasOne("UyariSoftBk.Modules.Product.Domain.Entity.UserEntity", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.OrderEntity", b =>
-                {
-                    b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("UyariSoftBk.Modules.Product.Domain.Entity.UserEntity", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

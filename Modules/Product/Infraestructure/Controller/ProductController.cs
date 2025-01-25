@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UyariSoftBk.Model.Dtos.Order;
 using UyariSoftBk.Modules.Product.Application.Port;
 
 namespace UyariSoftBk.Modules.Product.Infraestructure.Controller;
@@ -49,6 +50,15 @@ public class ProductController : ControllerBase
     
         await _productInputPort.GetByIdProduct(idProduct);
 
+        var products = _productOutPort.GetResponse;
+        return Ok(products);
+    }
+    
+    
+    [HttpPost("InsertoOrder")]
+    public async Task<ActionResult> InsertOrder([FromBody] InsertOrderDto data)
+    {
+        await _productInputPort.InsertOrder(data);
         var products = _productOutPort.GetResponse;
         return Ok(products);
     }

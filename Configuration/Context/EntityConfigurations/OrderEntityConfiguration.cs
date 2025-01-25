@@ -13,15 +13,11 @@ public class OrderEntityConfiguration : IEntityTypeConfiguration<OrderEntity>
         builder.Property(o => o.OrderDate)
             .IsRequired();
 
+        builder.Property(o => o.UserId)
+            .IsRequired();
+        
         builder.Property(o => o.TotalAmount)
             .HasColumnType("decimal(18,2)");
-
-        builder.HasOne(o => o.User)
-            .WithMany(u => u.Orders)
-            .HasForeignKey(o => o.UserId);
-
-        builder.HasMany(o => o.OrderDetails)
-            .WithOne(od => od.Order)
-            .HasForeignKey(od => od.OrderId);
+        
     }
 }
