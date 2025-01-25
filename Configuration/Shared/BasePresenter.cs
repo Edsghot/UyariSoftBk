@@ -6,7 +6,7 @@ public class BasePresenter<T> : IBasePresenter<T>
 {
     public virtual ResponseDto<T>? GetResponse { get; set; }
 
-    public void Success(T data, string message = "Data retrieved successfully")
+    public void Success(T data, string message = "Operacion exitosa!")
     {
         GetResponse = new ResponseDto<T>
         {
@@ -15,8 +15,18 @@ public class BasePresenter<T> : IBasePresenter<T>
             Data = data
         };
     }
+    
+    public void Ok(string message = "Operacion exitosa!")
+    {
+        GetResponse = new ResponseDto<T>
+        {
+            Success = true,
+            Message = message,
+            Data = typeof(T) == typeof(IEnumerable<object>) ? (T)(object)new List<object>() : default(T)
+        };
+    }
 
-    public void NotFound(string message = "Data not found")
+    public void NotFound(string message = "Data no encontrada")
 {
     GetResponse = new ResponseDto<T>
     {

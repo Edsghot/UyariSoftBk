@@ -54,12 +54,27 @@ public class ProductController : ControllerBase
         return Ok(products);
     }
     
-    
     [HttpPost("InsertoOrder")]
     public async Task<ActionResult> InsertOrder([FromBody] InsertOrderDto data)
     {
         await _productInputPort.InsertOrder(data);
         var products = _productOutPort.GetResponse;
         return Ok(products);
+    }
+    
+    [HttpGet("LastOrderPayment")]
+    public async Task<ActionResult> LastOrderPayment(){
+    
+        await _productInputPort.LastOrderPayment();
+
+        var response = _productOutPort.GetResponse;
+        return Ok(response);
+    }
+    
+    [HttpPut("UpdateOrderStatus/{id:int}")]
+    public async Task<ActionResult> UpdateOrderStatus([FromRoute] int id){
+        await _productInputPort.UpdateOrderStatus(id);
+        var response = _productOutPort.GetResponse;
+        return Ok(response);
     }
 }

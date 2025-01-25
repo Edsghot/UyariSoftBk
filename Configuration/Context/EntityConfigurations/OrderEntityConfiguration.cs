@@ -15,7 +15,10 @@ public class OrderEntityConfiguration : IEntityTypeConfiguration<OrderEntity>
 
         builder.Property(o => o.UserId)
             .IsRequired();
-        
+        builder.Property(o => o.Paid);
+
+        builder.Property(o => o.PaidDate);
+
         builder.Property(o => o.TotalAmount)
             .HasColumnType("decimal(18,2)");
         

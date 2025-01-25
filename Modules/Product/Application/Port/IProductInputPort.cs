@@ -10,4 +10,6 @@ public interface IProductInputPort
     Task GetAllByCategories(int idCategory);
     Task GetByIdProduct(int idProduct);
     Task InsertOrder(InsertOrderDto data);
+    Task LastOrderPayment();
+    Task UpdateOrderStatus( int id);
 }

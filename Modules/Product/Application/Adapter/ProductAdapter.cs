@@ -100,4 +100,48 @@ public class ProductAdapter : IProductInputPort
         
         _productOutPort.Success(orderData,"Creado con exito!");
     }
+
+    public async Task LastOrderPayment()
+    {
+        var lastOrder = (await _productRepository.GetAllAsync<OrderEntity>(x => x.Where(x => x.Paid == false))).ToList();
+        
+        var maxDate = lastOrder.Max(o => o.OrderDate);
+        var OrderWithLastDate = await _productRepository.GetAsync<OrderEntity>(x => x.Paid == false && x.OrderDate == maxDate);
+
+        if (OrderWithLastDate == null)
+        {
+            _productOutPort.NotFound("No hay ordenes por pagar");
+            return;
+        }
+        
+        var data = OrderWithLastDate.Adapt<OrderDto>();
+        
+        _productOutPort.Success(data,"El resultado");        
+        
+    }
+    
+    public async Task UpdateOrderStatus(int id)
+    {
+        var order = await _productRepository.GetAsync<OrderEntity>(x => x.OrderId == id);
+
+        if (order == null)
+        {
+            _productOutPort.NotFound("No se encontro el orden");
+            return;
+        }
+        
+        if (order.Paid == false)
+        {
+            _productOutPort.Error("Este orden ya se pago");
+            return;
+        }
+
+        order.Paid = true;
+        order.PaidDate = _peruDateTime;
+        
+        await _productRepository.UpdateAsync(order);
+        
+        _productOutPort.Ok("operacion exitosa!");        
+        
+    }
 }
