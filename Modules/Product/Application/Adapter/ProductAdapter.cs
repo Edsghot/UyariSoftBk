@@ -1,6 +1,9 @@
 ﻿
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using UyariSoftBk.Model.Dtos.dataProduct;
 using UyariSoftBk.Model.Dtos.Order;
 using UyariSoftBk.Model.Dtos.Product;
 using UyariSoftBk.Modules.Event.Domain.IRepository;
@@ -14,6 +17,7 @@ public class ProductAdapter : IProductInputPort
     private readonly IProductOutPort _productOutPort;
     private readonly IProductRepository _productRepository;
     private readonly DateTime _peruDateTime;
+    private readonly Cloudinary _cloudinary;
 
     public ProductAdapter(IProductRepository repository, IProductOutPort productOutPort)
     {
@@ -22,6 +26,8 @@ public class ProductAdapter : IProductInputPort
         
         var peruTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
         _peruDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, peruTimeZone);
+        var account = new Account("dd0qlzyyk","952839112726724","7fxZGsz7Lz2vY5Ahp6spldgMTW4");
+        _cloudinary = new Cloudinary(account);
 
     }
     public async Task GetAllProducts()
@@ -143,5 +149,66 @@ public class ProductAdapter : IProductInputPort
         
         _productOutPort.Ok("operacion exitosa!");        
         
+    }
+
+    private async Task<string> UploadImage(IFormFile file,string folder)
+    {
+        await using var streamCover = file.OpenReadStream();
+        var uploadParamsCover = new ImageUploadParams
+        {
+            File = new FileDescription(file.FileName, streamCover),
+            Transformation = new Transformation().Width(500).Height(500).Crop("fill"),
+            Folder = folder
+        };
+
+        var uploadResult = await _cloudinary.UploadAsync(uploadParamsCover);
+
+        if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            return uploadResult.Url.AbsoluteUri;
+        }
+        return "";
+    }
+
+    public async Task RegisterProduct(InsertProductDto data)
+    {
+
+        var newProduct = data.Adapt<ProductEntity>();
+
+        var cover = await UploadImage(data.Cover, "coverUyari");
+        newProduct.Cover = cover;
+        var icon = await UploadImage(data.Icon, "iconUyari");
+        newProduct.Icon = icon;
+        
+        await _productRepository.AddAsync(newProduct);
+        
+        foreach (var url in data.Githubs)
+        {
+            var github = new GitHubEntity();
+            github.Url = url;
+            github.ProductId = newProduct.ProductId;
+            await _productRepository.AddAsync(github);
+        }
+        
+        
+        foreach (var file in data.Images)
+        {
+            if (file.Length > 0)
+            {
+                var imageUrl = await UploadImage(file, "productUyariSoft");
+                if (imageUrl == "")
+                {
+                    _productOutPort.Error("Error no se pudo subir la imagen");
+                    return;
+                }
+                var imageProduct = new ProductImageEntity();
+                imageProduct.ProductId = newProduct.ProductId;
+                imageProduct.ImageUrl = imageUrl;
+                
+                await _productRepository.AddAsync(imageProduct);
+            }
+        }
+        
+        _productOutPort.Success(newProduct,"Producto creado correctamente");
     }
 }

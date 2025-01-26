@@ -11,7 +11,6 @@
         public DateTime ModificationDate { get; set; }
         public string Cover { get; set; }
         public string Icon { get; set; }
-        
         public decimal Discount { get; set; }
         public double Rating { get; set; }
         public int NumberOfReviews { get; set; }
@@ -20,7 +19,5 @@
         public string Developer { get; set; }
         public string WebSite { get; set; }
         public int IdCategory { get; set; }
-        public int IdImages { get; set; }
-        public int IdGitHub { get; set; }
     }
 }

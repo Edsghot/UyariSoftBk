@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UyariSoftBk.Model.Dtos.dataProduct;
 using UyariSoftBk.Model.Dtos.Order;
 using UyariSoftBk.Modules.Product.Application.Port;
 
@@ -74,6 +75,13 @@ public class ProductController : ControllerBase
     [HttpPut("UpdateOrderStatus/{id:int}")]
     public async Task<ActionResult> UpdateOrderStatus([FromRoute] int id){
         await _productInputPort.UpdateOrderStatus(id);
+        var response = _productOutPort.GetResponse;
+        return Ok(response);
+    }
+    
+    [HttpPost("RegisterProduct")]
+    public async Task<ActionResult> RegisterProduct([FromForm]InsertProductDto data){
+        await _productInputPort.RegisterProduct(data);
         var response = _productOutPort.GetResponse;
         return Ok(response);
     }

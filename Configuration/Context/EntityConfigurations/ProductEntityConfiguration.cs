@@ -35,11 +35,6 @@ public class ProductEntityConfiguration : IEntityTypeConfiguration<ProductEntity
         builder.Property(p => p.Icon)
             .HasMaxLength(200);
 
-        builder.Property(p => p.IdImages)
-            .IsRequired();
-
-        builder.Property(p => p.IdGitHub)
-            .IsRequired();
         builder.Property(p => p.Discount)
             .HasColumnType("decimal(18,2)");
 

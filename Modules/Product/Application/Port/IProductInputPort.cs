@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
+using UyariSoftBk.Model.Dtos.dataProduct;
 using UyariSoftBk.Model.Dtos.Order;
 
 namespace UyariSoftBk.Modules.Product.Application.Port;
@@ -12,4 +14,5 @@ public interface IProductInputPort
     Task InsertOrder(InsertOrderDto data);
     Task LastOrderPayment();
     Task UpdateOrderStatus( int id);
+    Task RegisterProduct(InsertProductDto data);
 }
