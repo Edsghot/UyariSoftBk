@@ -22,7 +22,7 @@ public class MySqlContext : DbContext
     {
         var connectionString =
             "Server=jhedgost.com;Database=dbjhfjuv_UyariSoft;User=dbjhfjuv_edsghot;Password=Repro321.;";
-       // var connectionString = "Server=jhedgost.com;Database=dbjhfjuv_UyariSoft;User=dbjhfjuv_edsghot;Password=Repro321.;";
+       // var connectionString = "Server=jhedgost.com;Database=dbjhfjuv_UyariSoft;User=dbjhfjuv_edsghot;Password=Repro321.;"
 
         optionsBuilder.UseMySql(
             connectionString,
