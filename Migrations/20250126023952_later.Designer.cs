@@ -11,8 +11,8 @@ using UyariSoftBk.Configuration.Context;
 namespace UyariSoftBk.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20250125181147_later2")]
-    partial class later2
+    [Migration("20250126023952_later")]
+    partial class later
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,12 +143,6 @@ namespace UyariSoftBk.Migrations
                         .HasColumnType("varchar(200)");
 
                     b.Property<int>("IdCategory")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdGitHub")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdImages")
                         .HasColumnType("int");
 
                     b.Property<string>("InstallationIntructions")

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UyariSoftBk.Migrations
 {
-    public partial class later11 : Migration
+    public partial class later : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,7 +72,9 @@ namespace UyariSoftBk.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PaidDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -125,9 +127,7 @@ namespace UyariSoftBk.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     WebSite = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdCategory = table.Column<int>(type: "int", nullable: false),
-                    IdImages = table.Column<int>(type: "int", nullable: false),
-                    IdGitHub = table.Column<int>(type: "int", nullable: false)
+                    IdCategory = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
