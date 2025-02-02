@@ -211,4 +211,16 @@ public class ProductAdapter : IProductInputPort
         
         _productOutPort.Success(newProduct,"Producto creado correctamente");
     }
+
+    public async Task ImageUpload(ImageDto data)
+    {
+        var imageUrl = await UploadImage(data.Image, "Subida");
+        if (imageUrl == "")
+        {
+            _productOutPort.Error("Error no se pudo subir la imagen");
+            return;
+        }
+        
+        _productOutPort.Success(imageUrl,"Imagen subida correctamente");
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UyariSoftBk.Model.Dtos.dataProduct;
 using UyariSoftBk.Model.Dtos.Order;
+using UyariSoftBk.Model.Dtos.Product;
 using UyariSoftBk.Modules.Product.Application.Port;
 
 namespace UyariSoftBk.Modules.Product.Infraestructure.Controller;
@@ -82,6 +83,13 @@ public class ProductController : ControllerBase
     [HttpPost("RegisterProduct")]
     public async Task<ActionResult> RegisterProduct([FromForm]InsertProductDto data){
         await _productInputPort.RegisterProduct(data);
+        var response = _productOutPort.GetResponse;
+        return Ok(response);
+    }
+    
+    [HttpPost("subirImage")]
+    public async Task<ActionResult> ImageUpload([FromForm]ImageDto data){
+        await _productInputPort.ImageUpload(data);
         var response = _productOutPort.GetResponse;
         return Ok(response);
     }
