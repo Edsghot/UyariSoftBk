@@ -56,6 +56,5 @@ public class ProductEntityConfiguration : IEntityTypeConfiguration<ProductEntity
         builder.Property(p => p.WebSite)
             .HasMaxLength(200);
 
-        builder.Property(p => p.IdCategory);
     }
 }

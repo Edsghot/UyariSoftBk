@@ -18,6 +18,5 @@
         public string Version { get; set; }
         public string Developer { get; set; }
         public string WebSite { get; set; }
-        public int IdCategory { get; set; }
     }
 }
