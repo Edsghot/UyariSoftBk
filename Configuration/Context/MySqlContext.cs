@@ -24,10 +24,11 @@ public class MySqlContext : DbContext
             "Server=jhedgost.com;Database=dbjhfjuv_UyariSoft;User=dbjhfjuv_edsghot;Password=Repro321.;";
        // var connectionString = "Server=jhedgost.com;Database=dbjhfjuv_UyariSoft;User=dbjhfjuv_edsghot;Password=Repro321.;"
 
-        optionsBuilder.UseMySql(
-            connectionString,
-            new MySqlServerVersion(new Version(8, 0, 21))
-        );
+       optionsBuilder.UseMySql(
+           connectionString,
+           new MySqlServerVersion(new Version(8, 0, 21)),
+           options => options.EnableRetryOnFailure()
+       );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

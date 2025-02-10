@@ -59,22 +59,30 @@ public class ProductAdapter : IProductInputPort
     
     public async Task GetAllByCategories(int idCategory)
     {
-        var products = await _productRepository.GetAllAsync<ProductEntity>(x => x.Where(x => x.IdCategory == idCategory));
+        var categories = await _productRepository.GetAllAsync<CategoryEntity>(x => x.Where(x => x.CategoryId == idCategory));
 
-        var productDtos = products.Adapt<IEnumerable<ProductDto>>().ToList();
-         
-        foreach (var productDto in productDtos)
+        var productDtos = new List<ProductDto>();
+
+        foreach (var category in categories)
         {
-            var githubEntities = await _productRepository.GetAllAsync<GitHubEntity>(x => x.Where(g => g.ProductId == productDto.ProductId));
-            productDto.GitHub = githubEntities.Adapt<List<GitHubDto>>();
+            var products = await _productRepository.GetAllAsync<ProductEntity>(x => x.Where(p => p.ProductId == category.IdProduct));
+            var productDtoList = products.Adapt<IEnumerable<ProductDto>>().ToList();
 
-            var imageEntities = await _productRepository.GetAllAsync<ProductImageEntity>(x => x.Where(i => i.ProductId == productDto.ProductId));
-            productDto.Images = imageEntities.Adapt<List<ProductImageDto>>();
-            var categorias = await _productRepository.GetAllAsync<CategoryEntity>(x => x.Where(i => i.IdProduct == productDto.ProductId));
+            foreach (var productDto in productDtoList)
+            {
+                var githubEntities = await _productRepository.GetAllAsync<GitHubEntity>(x => x.Where(g => g.ProductId == productDto.ProductId));
+                productDto.GitHub = githubEntities.Adapt<List<GitHubDto>>();
 
-            productDto.Categories = categorias.Adapt<List<CategoryDto>>();
-        
+                var imageEntities = await _productRepository.GetAllAsync<ProductImageEntity>(x => x.Where(i => i.ProductId == productDto.ProductId));
+                productDto.Images = imageEntities.Adapt<List<ProductImageDto>>();
+
+                var categorias = await _productRepository.GetAllAsync<CategoryEntity>(x => x.Where(i => i.IdProduct == productDto.ProductId));
+                productDto.Categories = categorias.Adapt<List<CategoryDto>>();
+            }
+
+            productDtos.AddRange(productDtoList);
         }
+
         _productOutPort.GetAllByCategories(productDtos);
     }
 
