@@ -11,8 +11,8 @@ using UyariSoftBk.Configuration.Context;
 namespace UyariSoftBk.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20250126023952_later")]
-    partial class later
+    [Migration("20250210023143_later5")]
+    partial class later5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

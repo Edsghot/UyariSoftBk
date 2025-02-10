@@ -21,7 +21,7 @@ public class MySqlContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString =
-            "Server=jhedgost.com;Database=dbjhfjuv_UyariSoft;User=dbjhfjuv_edsghot;Password=Repro321.;";
+            "Server=monorail.proxy.rlwy.net;Port=36815;Database=railway;User=root;Password=fJICFleKrdqdkMjtQyeKqkzKilcxEWfZ;";
        // var connectionString = "Server=jhedgost.com;Database=dbjhfjuv_UyariSoft;User=dbjhfjuv_edsghot;Password=Repro321.;"
 
        optionsBuilder.UseMySql(

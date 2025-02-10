@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UyariSoftBk.Migrations
 {
-    public partial class later : Migration
+    public partial class later5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
